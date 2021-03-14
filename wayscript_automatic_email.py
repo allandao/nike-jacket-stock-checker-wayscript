@@ -40,9 +40,8 @@ for page in pageURL:
     soup = BeautifulSoup(resp.html.html, "lxml")
 
     # Find the li element with the jacket's colorwave
-    print()
     clothing_colorwave = soup.find('li', attrs={'class': 'description-preview__color-description'})
-    #print(clothing_colorwave.text[7:len(clothing_colorwave.text)]) # Example - Shown: Black/Black/Black/Sail
+    # String email_stock_alert_text created on wayscript via 'Create Variable' in function steps
     email_stock_alert_text += '\n' + clothing_colorwave.text[7:len(clothing_colorwave.text)] + '\n'
 
     soldOutDiv = soup.find('div', attrs={'class': 'sold-out'})
@@ -55,21 +54,14 @@ for page in pageURL:
 
         for div in div_sizes:
             if not div.input.has_attr("disabled"):
-                #print(div.label.text + " - in stock: Yes")
-                #print(div.label.text + " - in stock")
                 email_stock_alert_text += div.label.text + ' - in stock\n'
-            #else:
-                #print(div.label.text + " - in stock: No")
         
         email_stock_alert_text += pageURL[currentPage] + '\n'
         
     else:
-        soldOutText = soldOutDiv.text.strip() # strip() is used to remove starting and trailing
-        #print(soldOutText)
-        #print("Sold out")
         email_stock_alert_text += 'Sold out\n'
 
-
+# \n originally for console version of code
 email_stock_alert_text = email_stock_alert_text.replace('\n', '<br />')
 # Note: html element can simply be inputted as a string, as email treats content as text/html
 # If wayscript/email client or code were to create as text/plain, then \n would be properly be
