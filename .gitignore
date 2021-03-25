@@ -1,0 +1,6 @@
+# Mac Files
+.DS_Store
+
+# Private Reference
+parse-dynamic-JS-content.py
+static-content.py
